@@ -1,25 +1,29 @@
 import { useMemo, useState } from 'react'
-import { Plus, Trash2, Printer, FileText } from 'lucide-react'
-
-const initialItems = [
-  { id: crypto.randomUUID(), category: 'Línea de vida', description: 'LINEA DE VIDA 1 21 ML', quantity: 21, unitValue: 280000, origin: '', note: '' },
-  { id: crypto.randomUUID(), category: 'Línea de vida', description: 'LINEA DE VIDA 2 27 ML', quantity: 27, unitValue: 280000, origin: '', note: '' },
-  { id: crypto.randomUUID(), category: 'Línea de vida', description: 'LINEA DE VIDA CONEXIÓN 26 ML', quantity: 26, unitValue: 280000, origin: '', note: '' },
-  { id: crypto.randomUUID(), category: 'Escaleras', description: 'ESCALERA 11 METROS', quantity: 11, unitValue: 1200000, origin: '', note: '' },
-]
+import {
+  Plus,
+  Trash2,
+  Printer,
+  FileText,
+  Shield,
+  Building2,
+  Phone,
+  MapPin,
+  ClipboardList,
+  BadgeDollarSign,
+} from 'lucide-react'
 
 const serviceTemplates = [
-  { category: 'Línea de vida', description: 'LINEA DE VIDA 1', quantity: 1, unitValue: 280000, origin: '' },
-  { category: 'Línea de vida', description: 'LINEA DE VIDA 2', quantity: 1, unitValue: 280000, origin: '' },
-  { category: 'Línea de vida', description: 'LINEA DE VIDA CONEXIÓN', quantity: 1, unitValue: 280000, origin: '' },
-  { category: 'Línea de vida', description: 'LÍNEA DE VIDA HORIZONTAL', quantity: 1, unitValue: 280000, origin: '' },
-  { category: 'Línea de vida', description: 'LÍNEA DE VIDA VERTICAL', quantity: 1, unitValue: 280000, origin: '' },
-  { category: 'Puntos de anclaje', description: 'PUNTO DE ANCLAJE NACIONAL', quantity: 1, unitValue: 180000, origin: 'Nacional' },
-  { category: 'Puntos de anclaje', description: 'PUNTO DE ANCLAJE IMPORTADO', quantity: 1, unitValue: 260000, origin: 'Importado' },
-  { category: 'Escotillas', description: 'ESCOTILLA', quantity: 1, unitValue: 1500000, origin: '' },
-  { category: 'Escaleras', description: 'ESCALERA', quantity: 1, unitValue: 1200000, origin: '' },
-  { category: 'Estructuras Metálicas', description: 'PÉRGOLA', quantity: 1, unitValue: 2500000, origin: '' },
-  { category: 'Estructuras Metálicas', description: 'ESTRUCTURA METÁLICA', quantity: 1, unitValue: 2000000, origin: '' },
+  { category: 'Línea de vida', description: 'LINEA DE VIDA 1 21 ML', quantity: 21, unitValue: 280000, origin: '', note: '' },
+  { category: 'Línea de vida', description: 'LINEA DE VIDA 2 27 ML', quantity: 27, unitValue: 280000, origin: '', note: '' },
+  { category: 'Línea de vida', description: 'LINEA DE VIDA CONEXIÓN 26 ML', quantity: 26, unitValue: 280000, origin: '', note: '' },
+  { category: 'Línea de vida', description: 'LÍNEA DE VIDA HORIZONTAL', quantity: 1, unitValue: 280000, origin: '', note: '' },
+  { category: 'Línea de vida', description: 'LÍNEA DE VIDA VERTICAL', quantity: 1, unitValue: 280000, origin: '', note: '' },
+  { category: 'Puntos de anclaje', description: 'PUNTO DE ANCLAJE NACIONAL', quantity: 1, unitValue: 180000, origin: 'Nacional', note: '' },
+  { category: 'Puntos de anclaje', description: 'PUNTO DE ANCLAJE IMPORTADO', quantity: 1, unitValue: 260000, origin: 'Importado', note: '' },
+  { category: 'Escotillas', description: 'ESCOTILLA', quantity: 1, unitValue: 1500000, origin: '', note: '' },
+  { category: 'Escaleras', description: 'ESCALERA 11 METROS', quantity: 11, unitValue: 1200000, origin: '', note: '' },
+  { category: 'Estructuras Metálicas', description: 'PÉRGOLA', quantity: 1, unitValue: 2500000, origin: '', note: '' },
+  { category: 'Estructuras Metálicas', description: 'ESTRUCTURA METÁLICA', quantity: 1, unitValue: 2200000, origin: '', note: '' },
 ]
 
 const technicalRowsDefault = [
@@ -99,12 +103,34 @@ const initialForm = {
     'Recertificación sin costo al año siguiente de la instalación.',
     'Esta propuesta incluye el coordinador para trabajo seguro en alturas de tiempo completo en la obra.',
   ],
+  personalSeguridad:
+    'Todo el personal que labora en la empresa, se encuentra afiliado a ARL, Salud, y Pensiones. Llevamos todos los elementos personales de seguridad necesarios para efectuar dicho trabajo. Realizamos todas las reparaciones de los daños que puedan surgir durante la ejecución de dicho trabajo y se entregan todas las pólizas exigidas por el contratante.',
   sgsst:
     'Nuestra empresa INGEANCLAJES S.A.S, se encuentra comprometida con el cumplimiento de las directrices generales para la aplicación de la resolución 4272 de 2021 garantizando la implementación del Sistema de Gestión de Seguridad y Salud en el Trabajo y teniendo coherencia con la estrategia organizacional de la empresa redundando en el mejoramiento de las condiciones de trabajo y calidad de vida de todas las personas al evitar y minimizar los accidentes de trabajo, enfermedades laborales y fomentar una cultura preventiva y del auto cuidado en los diferentes frentes de trabajo.',
   firmaNombre: 'PAULA ANDREA SEPULVEDA L',
   firmaCargo: 'DIRECTORA COMERCIAL',
   firmaTelefono: '3152889541',
 }
+
+function createItem(template = serviceTemplates[0]) {
+  const id = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`
+  return {
+    id,
+    category: template.category,
+    description: template.description,
+    quantity: template.quantity,
+    unitValue: template.unitValue,
+    origin: template.origin,
+    note: template.note,
+  }
+}
+
+const initialItems = [
+  createItem(serviceTemplates[0]),
+  createItem(serviceTemplates[1]),
+  createItem(serviceTemplates[2]),
+  createItem(serviceTemplates[8]),
+]
 
 function currency(value) {
   return new Intl.NumberFormat('es-CO', {
@@ -114,19 +140,7 @@ function currency(value) {
   }).format(Number(value || 0))
 }
 
-function blankItemFromTemplate(template = serviceTemplates[0]) {
-  return {
-    id: crypto.randomUUID(),
-    category: template.category,
-    description: template.description,
-    quantity: template.quantity,
-    unitValue: template.unitValue,
-    origin: template.origin,
-    note: '',
-  }
-}
-
-function pageFoot() {
+function PageFoot() {
   return (
     <div className="page-foot">
       <div className="separator" />
@@ -134,6 +148,15 @@ function pageFoot() {
       <p>Nit. 900193965-4. comercial1ingeanclajes@gmail.com</p>
       <p>www.ingeanclajes.com</p>
     </div>
+  )
+}
+
+function Field({ label, children, icon }) {
+  return (
+    <label className="field">
+      <span>{icon}{label}</span>
+      {children}
+    </label>
   )
 }
 
@@ -159,45 +182,48 @@ export default function App() {
 
   const updateForm = (key, value) => setForm((prev) => ({ ...prev, [key]: value }))
 
-  function updateItem(id, key, value) {
+  const updateItem = (id, key, value) => {
     setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, [key]: key === 'quantity' || key === 'unitValue' ? Number(value) : value } : item)),
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, [key]: key === 'quantity' || key === 'unitValue' ? Number(value) : value }
+          : item,
+      ),
     )
   }
 
-  function addItem() {
-    const template = serviceTemplates.find((item) => item.description === selectedTemplate) || serviceTemplates[0]
-    setItems((prev) => [...prev, blankItemFromTemplate(template)])
+  const addItem = () => {
+    const template = serviceTemplates.find((t) => t.description === selectedTemplate) || serviceTemplates[0]
+    setItems((prev) => [...prev, createItem(template)])
   }
 
-  function removeItem(id) {
-    setItems((prev) => prev.filter((item) => item.id !== id))
-  }
+  const removeItem = (id) => setItems((prev) => prev.filter((item) => item.id !== id))
 
-  function updateTechnicalRow(index, key, value) {
+  const updateTechnicalRow = (index, key, value) => {
     setTechnicalRows((prev) => prev.map((row, i) => (i === index ? { ...row, [key]: value } : row)))
   }
 
-  function addTechnicalRow() {
+  const addTechnicalRow = () => {
     setTechnicalRows((prev) => [...prev, { element: 'Nuevo elemento', characteristic: 'Nueva característica técnica.' }])
   }
 
-  function removeTechnicalRow(index) {
-    setTechnicalRows((prev) => prev.filter((_, i) => i !== index))
-  }
+  const removeTechnicalRow = (index) => setTechnicalRows((prev) => prev.filter((_, i) => i !== index))
 
-  function updateIncludeItem(index, value) {
+  const updateIncludeItem = (index, value) => {
     setForm((prev) => ({
       ...prev,
       incluyeItems: prev.incluyeItems.map((item, i) => (i === index ? value : item)),
     }))
   }
 
-  function addIncludeItem() {
-    setForm((prev) => ({ ...prev, incluyeItems: [...prev.incluyeItems, 'Nuevo ítem incluido.'] }))
+  const addIncludeItem = () => {
+    setForm((prev) => ({
+      ...prev,
+      incluyeItems: [...prev.incluyeItems, 'Nuevo ítem incluido.'],
+    }))
   }
 
-  function removeIncludeItem(index) {
+  const removeIncludeItem = (index) => {
     setForm((prev) => ({
       ...prev,
       incluyeItems: prev.incluyeItems.filter((_, i) => i !== index),
@@ -206,35 +232,55 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <aside className="editor">
-        <div className="sticky">
-          <div className="editor-head">
+      <aside className="editor-panel">
+        <div className="editor-sticky">
+          <div className="hero-editor">
             <div>
-              <p className="eyebrow">Ingeanclajes</p>
-              <h1>Formato exacto del PDF</h1>
-              <p className="muted">Ahora la cotización queda con la misma estructura del PDF real.</p>
+              <p className="eyebrow">Ingeanclajes · Premium</p>
+              <h1>Cotización estilo PDF</h1>
+              <p className="muted">Diseño premium, tabla más elegante, pie de página corregido y estructura fiel al formato comercial.</p>
             </div>
-            <button className="print-btn" onClick={() => window.print()}>
+            <button className="primary-btn" onClick={() => window.print()}>
               <Printer size={16} />
-              Imprimir / PDF
+              Imprimir / Exportar PDF
             </button>
           </div>
 
           <section className="editor-card">
-            <h2>Encabezado</h2>
-            <div className="grid two">
-              <Field label="Ciudad"><input value={form.cityLine} onChange={(e) => updateForm('cityLine', e.target.value)} /></Field>
-              <Field label="Fecha"><input value={form.dateLine} onChange={(e) => updateForm('dateLine', e.target.value)} /></Field>
-              <Field label="Cotización No."><input value={form.quotationNo} onChange={(e) => updateForm('quotationNo', e.target.value)} /></Field>
-              <Field label="Señor"><input value={form.senor} onChange={(e) => updateForm('senor', e.target.value)} /></Field>
-              <Field label="Obra"><input value={form.obra} onChange={(e) => updateForm('obra', e.target.value)} /></Field>
-              <Field label="Teléfono"><input value={form.telefono} onChange={(e) => updateForm('telefono', e.target.value)} /></Field>
+            <div className="section-title">
+              <FileText size={16} />
+              <h2>Encabezado</h2>
             </div>
-            <Field label="Ciudad / ubicación"><input value={form.ubicacion} onChange={(e) => updateForm('ubicacion', e.target.value)} /></Field>
+            <div className="grid two">
+              <Field label="Ciudad">
+                <input value={form.cityLine} onChange={(e) => updateForm('cityLine', e.target.value)} />
+              </Field>
+              <Field label="Fecha">
+                <input value={form.dateLine} onChange={(e) => updateForm('dateLine', e.target.value)} />
+              </Field>
+              <Field label="Cotización No.">
+                <input value={form.quotationNo} onChange={(e) => updateForm('quotationNo', e.target.value)} />
+              </Field>
+              <Field label="Señor">
+                <input value={form.senor} onChange={(e) => updateForm('senor', e.target.value)} />
+              </Field>
+              <Field label="Obra">
+                <input value={form.obra} onChange={(e) => updateForm('obra', e.target.value)} />
+              </Field>
+              <Field label="Teléfono">
+                <input value={form.telefono} onChange={(e) => updateForm('telefono', e.target.value)} />
+              </Field>
+            </div>
+            <Field label="Ciudad / ubicación">
+              <input value={form.ubicacion} onChange={(e) => updateForm('ubicacion', e.target.value)} />
+            </Field>
           </section>
 
           <section className="editor-card">
-            <h2>Texto técnico</h2>
+            <div className="section-title">
+              <ClipboardList size={16} />
+              <h2>Texto técnico</h2>
+            </div>
             <Field label="Saludo"><input value={form.saludo} onChange={(e) => updateForm('saludo', e.target.value)} /></Field>
             <Field label="Introducción"><textarea rows="3" value={form.intro} onChange={(e) => updateForm('intro', e.target.value)} /></Field>
             <Field label="Trabajo en altura"><textarea rows="3" value={form.trabajoAltura} onChange={(e) => updateForm('trabajoAltura', e.target.value)} /></Field>
@@ -247,46 +293,80 @@ export default function App() {
           </section>
 
           <section className="editor-card">
-            <div className="section-inline">
-              <h2>Ítems de propuesta económica</h2>
-              <button className="ghost-btn" onClick={addItem}><Plus size={14} /> Agregar ítem</button>
+            <div className="section-title spread">
+              <div className="section-title">
+                <BadgeDollarSign size={16} />
+                <h2>Ítems de propuesta</h2>
+              </div>
+              <button className="secondary-btn" onClick={addItem}>
+                <Plus size={14} />
+                Agregar ítem
+              </button>
             </div>
-            <div className="template-row">
-              <label>Plantilla</label>
+
+            <div className="template-pick">
+              <label>Plantilla rápida</label>
               <select value={selectedTemplate} onChange={(e) => setSelectedTemplate(e.target.value)}>
                 {serviceTemplates.map((template) => (
-                  <option key={template.description} value={template.description}>{template.category} · {template.description}</option>
+                  <option key={template.description} value={template.description}>
+                    {template.category} · {template.description}
+                  </option>
                 ))}
               </select>
             </div>
 
             {items.map((item) => (
               <div key={item.id} className="item-card">
-                <div className="section-inline">
+                <div className="item-top">
                   <strong>{item.description}</strong>
-                  <button className="icon-btn" onClick={() => removeItem(item.id)}><Trash2 size={14} /></button>
+                  <button className="icon-btn" onClick={() => removeItem(item.id)}>
+                    <Trash2 size={14} />
+                  </button>
                 </div>
                 <div className="grid two">
-                  <Field label="Categoría"><input value={item.category} onChange={(e) => updateItem(item.id, 'category', e.target.value)} /></Field>
-                  <Field label="Origen"><input value={item.origin} onChange={(e) => updateItem(item.id, 'origin', e.target.value)} placeholder="Nacional / Importado" /></Field>
+                  <Field label="Categoría">
+                    <input value={item.category} onChange={(e) => updateItem(item.id, 'category', e.target.value)} />
+                  </Field>
+                  <Field label="Origen">
+                    <input value={item.origin} onChange={(e) => updateItem(item.id, 'origin', e.target.value)} placeholder="Nacional / Importado" />
+                  </Field>
                 </div>
-                <Field label="Descripción"><input value={item.description} onChange={(e) => updateItem(item.id, 'description', e.target.value)} /></Field>
+                <Field label="Descripción">
+                  <input value={item.description} onChange={(e) => updateItem(item.id, 'description', e.target.value)} />
+                </Field>
                 <div className="grid two">
-                  <Field label="Cantidad"><input type="number" value={item.quantity} onChange={(e) => updateItem(item.id, 'quantity', e.target.value)} /></Field>
-                  <Field label="Valor unitario"><input type="number" value={item.unitValue} onChange={(e) => updateItem(item.id, 'unitValue', e.target.value)} /></Field>
+                  <Field label="Cantidad">
+                    <input type="number" value={item.quantity} onChange={(e) => updateItem(item.id, 'quantity', e.target.value)} />
+                  </Field>
+                  <Field label="Valor unitario">
+                    <input type="number" value={item.unitValue} onChange={(e) => updateItem(item.id, 'unitValue', e.target.value)} />
+                  </Field>
                 </div>
-                <Field label="Observación"><input value={item.note} onChange={(e) => updateItem(item.id, 'note', e.target.value)} placeholder="Ej. punto de anclaje importado" /></Field>
+                <Field label="Observación">
+                  <input value={item.note} onChange={(e) => updateItem(item.id, 'note', e.target.value)} />
+                </Field>
               </div>
             ))}
           </section>
 
           <section className="editor-card">
-            <h2>Totales y condiciones</h2>
+            <div className="section-title">
+              <Building2 size={16} />
+              <h2>Totales y condiciones</h2>
+            </div>
             <div className="grid two">
-              <Field label="Administración"><input type="number" value={form.administration} onChange={(e) => updateForm('administration', e.target.value)} /></Field>
-              <Field label="Imprevistos"><input type="number" value={form.unforeseen} onChange={(e) => updateForm('unforeseen', e.target.value)} /></Field>
-              <Field label="Utilidades %"><input type="number" value={form.utilityPercent} onChange={(e) => updateForm('utilityPercent', e.target.value)} /></Field>
-              <Field label="IVA sobre utilidades %"><input type="number" value={form.ivaPercent} onChange={(e) => updateForm('ivaPercent', e.target.value)} /></Field>
+              <Field label="Administración">
+                <input type="number" value={form.administration} onChange={(e) => updateForm('administration', e.target.value)} />
+              </Field>
+              <Field label="Imprevistos">
+                <input type="number" value={form.unforeseen} onChange={(e) => updateForm('unforeseen', e.target.value)} />
+              </Field>
+              <Field label="Utilidades %">
+                <input type="number" value={form.utilityPercent} onChange={(e) => updateForm('utilityPercent', e.target.value)} />
+              </Field>
+              <Field label="IVA % sobre utilidades">
+                <input type="number" value={form.ivaPercent} onChange={(e) => updateForm('ivaPercent', e.target.value)} />
+              </Field>
             </div>
             <Field label="Nota IVA"><input value={form.ivaNote} onChange={(e) => updateForm('ivaNote', e.target.value)} /></Field>
             <Field label="Forma de pago"><input value={form.formaPago} onChange={(e) => updateForm('formaPago', e.target.value)} /></Field>
@@ -296,16 +376,24 @@ export default function App() {
           </section>
 
           <section className="editor-card">
-            <div className="section-inline">
-              <h2>Página técnica</h2>
-              <button className="ghost-btn" onClick={addTechnicalRow}><Plus size={14} /> Agregar fila</button>
+            <div className="section-title spread">
+              <div className="section-title">
+                <Shield size={16} />
+                <h2>Página técnica</h2>
+              </div>
+              <button className="secondary-btn" onClick={addTechnicalRow}>
+                <Plus size={14} />
+                Agregar fila
+              </button>
             </div>
             <Field label="Título técnico"><input value={form.technicalTitle} onChange={(e) => updateForm('technicalTitle', e.target.value)} /></Field>
             {technicalRows.map((row, index) => (
               <div key={index} className="item-card">
-                <div className="section-inline">
+                <div className="item-top">
                   <strong>Fila {index + 1}</strong>
-                  <button className="icon-btn" onClick={() => removeTechnicalRow(index)}><Trash2 size={14} /></button>
+                  <button className="icon-btn" onClick={() => removeTechnicalRow(index)}>
+                    <Trash2 size={14} />
+                  </button>
                 </div>
                 <Field label="Elemento"><input value={row.element} onChange={(e) => updateTechnicalRow(index, 'element', e.target.value)} /></Field>
                 <Field label="Característica"><textarea rows="4" value={row.characteristic} onChange={(e) => updateTechnicalRow(index, 'characteristic', e.target.value)} /></Field>
@@ -314,7 +402,10 @@ export default function App() {
           </section>
 
           <section className="editor-card">
-            <h2>Página de escalera</h2>
+            <div className="section-title">
+              <Phone size={16} />
+              <h2>Página de escalera</h2>
+            </div>
             <Field label="Normatividad"><textarea rows="3" value={form.escaleraNorma} onChange={(e) => updateForm('escaleraNorma', e.target.value)} /></Field>
             <Field label="Descripción escalera"><textarea rows="4" value={form.escaleraDescripcion} onChange={(e) => updateForm('escaleraDescripcion', e.target.value)} /></Field>
             <Field label="Texto superior"><input value={form.escaleraSuperior} onChange={(e) => updateForm('escaleraSuperior', e.target.value)} /></Field>
@@ -323,16 +414,25 @@ export default function App() {
           </section>
 
           <section className="editor-card">
-            <div className="section-inline">
-              <h2>Cierre</h2>
-              <button className="ghost-btn" onClick={addIncludeItem}><Plus size={14} /> Agregar incluido</button>
+            <div className="section-title spread">
+              <div className="section-title">
+                <MapPin size={16} />
+                <h2>Cierre</h2>
+              </div>
+              <button className="secondary-btn" onClick={addIncludeItem}>
+                <Plus size={14} />
+                Agregar incluido
+              </button>
             </div>
             {form.incluyeItems.map((item, index) => (
               <div key={index} className="include-row">
                 <textarea rows="2" value={item} onChange={(e) => updateIncludeItem(index, e.target.value)} />
-                <button className="icon-btn" onClick={() => removeIncludeItem(index)}><Trash2 size={14} /></button>
+                <button className="icon-btn" onClick={() => removeIncludeItem(index)}>
+                  <Trash2 size={14} />
+                </button>
               </div>
             ))}
+            <Field label="Texto personal y pólizas"><textarea rows="4" value={form.personalSeguridad} onChange={(e) => updateForm('personalSeguridad', e.target.value)} /></Field>
             <Field label="Texto SG-SST"><textarea rows="6" value={form.sgsst} onChange={(e) => updateForm('sgsst', e.target.value)} /></Field>
             <div className="grid two">
               <Field label="Nombre firma"><input value={form.firmaNombre} onChange={(e) => updateForm('firmaNombre', e.target.value)} /></Field>
@@ -343,9 +443,9 @@ export default function App() {
         </div>
       </aside>
 
-      <main className="preview">
+      <main className="preview-panel">
         <div className="page">
-          <div className="brand-top">
+          <div className="brand-lockup">
             <div className="brand-mark" />
             <div>
               <div className="brand-name">INGEANCLAJES</div>
@@ -371,14 +471,16 @@ export default function App() {
           <p>{form.trabajoAltura}</p>
           <p>{form.puntosAnclaje}</p>
           <p>{form.lineaVida}</p>
+
           <ul className="pdf-list">
             <li>{form.lineBullet1}</li>
             <li>{form.lineBullet2}</li>
             <li>{form.lineBullet3}</li>
           </ul>
+
           <p>{form.alcance}</p>
 
-          <div className="proposal-title">{form.proposalTitle}</div>
+          <div className="proposal-heading">{form.proposalTitle}</div>
           <table className="proposal-table">
             <thead>
               <tr>
@@ -392,21 +494,37 @@ export default function App() {
               {totals.rows.map((row) => (
                 <tr key={row.id}>
                   <td>
-                    {row.description}
-                    {row.origin ? ` (${row.origin})` : ''}
-                    {row.note ? ` - ${row.note}` : ''}
+                    <div className="item-desc">{row.description}</div>
+                    {row.origin || row.note ? (
+                      <div className="item-meta">
+                        {row.origin ? <span className="tag">{row.origin}</span> : null}
+                        {row.note ? <span className="soft-note">{row.note}</span> : null}
+                      </div>
+                    ) : null}
                   </td>
                   <td>{row.quantity}</td>
                   <td>{currency(row.unitValue)}</td>
                   <td>{currency(row.subtotal)}</td>
                 </tr>
               ))}
-              <tr className="summary"><td>SUBTOTAL</td><td></td><td></td><td>{currency(totals.subtotal)}</td></tr>
-              <tr className="summary"><td>ADMINISTRACION</td><td></td><td></td><td>{totals.administration ? currency(totals.administration) : '$  - -'}</td></tr>
-              <tr className="summary"><td>IMPREVISTOS</td><td></td><td></td><td>{totals.unforeseen ? currency(totals.unforeseen) : '$  - -'}</td></tr>
-              <tr className="summary"><td>UTILIDADES ({form.utilityPercent} % VALOR DE LA OBRA)</td><td></td><td></td><td>{currency(totals.utility)}</td></tr>
-              <tr className="summary"><td>IVA ({form.ivaPercent} % VALOR DE LAS UTILIDADES)</td><td></td><td></td><td>{currency(totals.iva)}</td></tr>
-              <tr className="total-row"><td>TOTAL</td><td></td><td></td><td>{currency(totals.total)}</td></tr>
+              <tr className="summary-row">
+                <td>SUBTOTAL</td><td></td><td></td><td>{currency(totals.subtotal)}</td>
+              </tr>
+              <tr className="summary-row">
+                <td>ADMINISTRACION</td><td></td><td></td><td>{totals.administration ? currency(totals.administration) : '$  - -'}</td>
+              </tr>
+              <tr className="summary-row">
+                <td>IMPREVISTOS</td><td></td><td></td><td>{totals.unforeseen ? currency(totals.unforeseen) : '$  - -'}</td>
+              </tr>
+              <tr className="summary-row">
+                <td>UTILIDADES ({form.utilityPercent} % VALOR DE LA OBRA)</td><td></td><td></td><td>{currency(totals.utility)}</td>
+              </tr>
+              <tr className="summary-row">
+                <td>IVA ({form.ivaPercent} % VALOR DE LAS UTILIDADES)</td><td></td><td></td><td>{currency(totals.iva)}</td>
+              </tr>
+              <tr className="total-row">
+                <td>TOTAL</td><td></td><td></td><td>{currency(totals.total)}</td>
+              </tr>
             </tbody>
           </table>
 
@@ -414,23 +532,23 @@ export default function App() {
 
           <div className="conditions">
             <h3>CONDICIONES COMERCIALES</h3>
-            <div className="condition-row"><strong>FORMA DE PAGO</strong><span>{form.formaPago}</span></div>
-            <div className="condition-row"><strong>TIEMPO DE EJECUCIÓN</strong><span>{form.tiempoEjecucion}</span></div>
-            <div className="condition-row"><strong>VALIDEZ DE LA OFERTA</strong><span>{form.validez}</span></div>
-            <div className="condition-row"><strong>CERTIFICACIÓN</strong><span>{form.certificacion}</span></div>
+            <div className="condition-row"><strong>FORMA DE PAGO</strong><span>: {form.formaPago}</span></div>
+            <div className="condition-row"><strong>TIEMPO DE EJECUCIÓN</strong><span>: {form.tiempoEjecucion}</span></div>
+            <div className="condition-row"><strong>VALIDEZ DE LA OFERTA</strong><span>: {form.validez}</span></div>
+            <div className="condition-row"><strong>CERTIFICACIÓN</strong><span>: {form.certificacion}</span></div>
           </div>
 
-          {pageFoot()}
+          <PageFoot />
         </div>
 
         <div className="page">
-          <div className="brand-center">
+          <div className="brand-centered">
             <div className="brand-mark" />
             <div className="brand-name">INGEANCLAJES</div>
           </div>
           <div className="brand-sub centered">ESPECIALISTAS EN ANCLAJES</div>
 
-          <div className="technical-title">{form.technicalTitle}</div>
+          <div className="technical-heading">{form.technicalTitle}</div>
           <table className="technical-table">
             <thead>
               <tr>
@@ -448,43 +566,45 @@ export default function App() {
             </tbody>
           </table>
 
-          {pageFoot()}
+          <PageFoot />
         </div>
 
         <div className="page">
-          <div className="brand-center">
+          <div className="brand-centered">
             <div className="brand-mark" />
             <div className="brand-name">INGEANCLAJES</div>
           </div>
           <div className="brand-sub centered">ESPECIALISTAS EN ANCLAJES</div>
 
           <div className="ladder-layout">
-            <div className="ladder-left">
+            <div className="ladder-copy">
               <div className="norma-badge">ARTICO SAFE-WORK</div>
               <h4>Normatividad:</h4>
               <p>{form.escaleraNorma}</p>
               <div className="info-box">{form.escaleraDescripcion}</div>
             </div>
 
-            <div className="ladder-center">
-              <div className="ladder-rail" />
+            <div className="ladder-drawing">
+              <div className="ladder-rail left" />
               <div className="ladder-rail right" />
-              {[0,1,2,3,4,5].map((step) => <div key={step} className="ladder-step" style={{ top: 120 + step * 72 }} />)}
+              {[0, 1, 2, 3, 4, 5].map((step) => (
+                <div key={step} className="ladder-step" style={{ top: 120 + step * 72 }} />
+              ))}
               <div className="ladder-cable" />
             </div>
 
-            <div className="ladder-right">
+            <div className="ladder-notes">
               <div className="callout">{form.escaleraSuperior}</div>
               <div className="callout">{form.escaleraCable}</div>
               <div className="callout bottom">{form.escaleraInferior}</div>
             </div>
           </div>
 
-          {pageFoot()}
+          <PageFoot />
         </div>
 
         <div className="page">
-          <div className="brand-top compact">
+          <div className="brand-lockup compact">
             <div className="brand-mark" />
             <div>
               <div className="brand-name">INGEANCLAJES</div>
@@ -498,12 +618,7 @@ export default function App() {
               {form.incluyeItems.map((item, index) => <li key={index}>{item}</li>)}
             </ul>
 
-            <p>
-              Todo el personal que labora en la empresa, se encuentra afiliado a ARL, Salud, y Pensiones. Llevamos
-              todos los elementos personales de seguridad necesarios para efectuar dicho trabajo. Realizamos todas
-              las reparaciones de los daños que puedan surgir durante la ejecución de dicho trabajo y se entregan
-              todas las pólizas exigidas por el contratante.
-            </p>
+            <p>{form.personalSeguridad}</p>
 
             <h3>SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO</h3>
             <p>{form.sgsst}</p>
@@ -516,18 +631,9 @@ export default function App() {
             </div>
           </div>
 
-          {pageFoot()}
+          <PageFoot />
         </div>
       </main>
     </div>
-  )
-}
-
-function Field({ label, children }) {
-  return (
-    <label className="field">
-      <span>{label}</span>
-      {children}
-    </label>
   )
 }

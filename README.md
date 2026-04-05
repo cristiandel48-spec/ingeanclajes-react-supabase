@@ -1,26 +1,33 @@
-# Ingeanclajes - Formato exacto PDF
+# Ingeanclajes - Cotización PDF Premium
 
-Esta versión reestructura la cotización para que se parezca al PDF real de Ingeanclajes:
+Versión React con diseño premium inspirada en el PDF real de Ingeanclajes.
 
-- Encabezado con fecha, número de cotización, señor, obra, teléfono y ciudad
+## Incluye
+- Encabezado con:
+  - ciudad y fecha
+  - número de cotización
+  - señor
+  - obra
+  - teléfono
+  - ubicación
 - Bloque descriptivo técnico
-- Tabla económica con columnas:
+- Tabla económica con:
   - DESCRIPCION
   - CANTIDAD
   - VALOR
   - SUBTOTAL
-- Bloque de condiciones comerciales
+- Filas de cierre:
+  - SUBTOTAL
+  - ADMINISTRACION
+  - IMPREVISTOS
+  - UTILIDADES
+  - IVA
+  - TOTAL
+- Condiciones comerciales
 - Página técnica de sistema no continuo
 - Página técnica de escalera
-- Bloque final de inclusiones, SG-SST y firma
-- Ítems dinámicos para que Camila agregue todas las líneas de vida que quiera
-- Opciones para:
-  - Estructuras metálicas
-  - Pérgolas
-  - Puntos de anclaje nacionales
-  - Puntos de anclaje importados
-  - Escotillas
-  - Escaleras
+- Cierre con incluidos, SG-SST y firma
+- Varias líneas de vida, escotillas, puntos de anclaje nacionales/importados, escaleras, estructuras metálicas y pérgolas
 
 ## Ejecutar
 ```bash
@@ -28,8 +35,7 @@ npm install
 npm run dev
 ```
 
-## Publicar
-Se despliega en Vercel como proyecto Vite con:
+## Publicar en Vercel
 - Root Directory: ./
 - Build Command: npm run build
 - Output Directory: dist
