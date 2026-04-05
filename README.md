@@ -1,33 +1,24 @@
-# Ingeanclajes - Cotización PDF Premium
 
-Versión React con diseño premium inspirada en el PDF real de Ingeanclajes.
+# Ingeanclajes - Sistema modular completo
+
+Módulos incluidos:
+- Dashboard
+- Nueva Cotización
+- Planos & Obra
+- Pagos Bancolombia
+- Mis Obras
+- Nómina
+- Horarios por obra y por empleado
 
 ## Incluye
-- Encabezado con:
-  - ciudad y fecha
-  - número de cotización
-  - señor
-  - obra
-  - teléfono
-  - ubicación
-- Bloque descriptivo técnico
-- Tabla económica con:
-  - DESCRIPCION
-  - CANTIDAD
-  - VALOR
-  - SUBTOTAL
-- Filas de cierre:
-  - SUBTOTAL
-  - ADMINISTRACION
-  - IMPREVISTOS
-  - UTILIDADES
-  - IVA
-  - TOTAL
-- Condiciones comerciales
-- Página técnica de sistema no continuo
-- Página técnica de escalera
-- Cierre con incluidos, SG-SST y firma
-- Varias líneas de vida, escotillas, puntos de anclaje nacionales/importados, escaleras, estructuras metálicas y pérgolas
+- Cotización con Google Maps URL e imagen satelital
+- Planos por cliente y por obra con trazos y puntos
+- Costos por plano
+- Pagos por cliente y por obra
+- Seguimiento de obras y saldo pendiente
+- Nómina con 12 empleados de ejemplo
+- Generación de CSV tipo plano Bancolombia para obras y nómina
+- Horarios semanales por empleado y por obra
 
 ## Ejecutar
 ```bash
@@ -40,3 +31,6 @@ npm run dev
 - Build Command: npm run build
 - Output Directory: dist
 - Install Command: npm install
+
+## Nota
+La generación de "plano Bancolombia" en esta demo exporta CSV. La integración bancaria real necesita credenciales y especificación final del formato del banco.

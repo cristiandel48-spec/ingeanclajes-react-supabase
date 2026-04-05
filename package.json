@@ -1,7 +1,7 @@
 {
-  "name": "ingeanclajes-pdf-premium-react",
+  "name": "ingeanclajes-dashboard-full",
   "private": true,
-  "version": "4.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
